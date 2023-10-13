@@ -14,11 +14,14 @@ app.get('/teaser/title/:imdbId', async (req, res) => {
 
     try {
         const browser = await puppeteer.launch({
+            headless: "new",
+            executablePath: process.env.PUPPETEER_EXECUTABLE_PATH,
             args: [
                 "--no-sandbox",
-                "--disable-gpu"
+                "--disable-setuid-sandbox",
+                "--single-process",
+                "--no-zygote"
             ],
-            headless: "new"
         });
         const page = await browser.newPage();
         console.log('Browser and page created successfully');
