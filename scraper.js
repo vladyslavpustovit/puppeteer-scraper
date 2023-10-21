@@ -14,14 +14,15 @@ app.get('/teaser/title/:imdbId', async (req, res) => {
 
     try {
         const browser = await puppeteer.launch({
-            headless: "new",
-            executablePath: process.env.PUPPETEER_EXECUTABLE_PATH,
             args: [
+                "disable-setuid-sandbox",
                 "--no-sandbox",
-                "--disable-setuid-sandbox",
-                "--single-process",
-                "--no-zygote"
+                // "single-process",
+                "--disable-gpu",
+                // "no-zygote"
             ],
+            headless: "new",
+            // executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || "/usr/bin/chromium-browser"
         });
         const page = await browser.newPage();
         console.log('Browser and page created successfully');
